@@ -11,11 +11,11 @@ const (
 	base = "https://lnbits.com"
 )
 
-// NewLNBitsAPI creates a new LNBits instance.
+// NewLNbitsAPI creates a new LNbits instance.
 //
 // It requires an admin key and an invoice/read key, provided by lnbits.com.
-func NewLNBitsAPI(adminKey, invoiceKey string) *LNBitsAPI {
-	return &LNBitsAPI{
+func NewLNbitsAPI(adminKey, invoiceKey string) *LNbitsAPI {
+	return &LNbitsAPI{
 		Client:     http.DefaultClient,
 		AdminKey:   adminKey,
 		InvoiceKey: invoiceKey,
@@ -24,7 +24,7 @@ func NewLNBitsAPI(adminKey, invoiceKey string) *LNBitsAPI {
 }
 
 // GetWalletDetails fetches the currently wallet details.
-func (l *LNBitsAPI) GetWalletDetails() (wal WalletDetails, err error) {
+func (l *LNbitsAPI) GetWalletDetails() (wal WalletDetails, err error) {
 	req, err := http.NewRequest("get", base+"/api/v1/wallet", nil)
 	if err != nil {
 		return
@@ -46,8 +46,8 @@ func (l *LNBitsAPI) GetWalletDetails() (wal WalletDetails, err error) {
 	return
 }
 
-// CreateInvoice
-func (l *LNBitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) (invoice Invoice, err error) {
+// CreateInvoice will make an invoice request and returns invoice details
+func (l *LNbitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) (invoice Invoice, err error) {
 	b, err := json.Marshal(InvoiceRequest{
 		Out:     out,
 		Amount:  amount,
@@ -79,8 +79,8 @@ func (l *LNBitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) 
 	return
 }
 
-// CheckInvoice
-func (l *LNBitsAPI) CheckInvoice(paymentHash string) (paymentResult PaymentResult, err error) {
+// CheckInvoice returns true in Paid field of output if the invoice is paid.
+func (l *LNbitsAPI) CheckInvoice(paymentHash string) (paymentResult PaymentResult, err error) {
 	req, err := http.NewRequest("get", base+"/api/v1/payments/"+paymentHash, nil)
 	if err != nil {
 		return
