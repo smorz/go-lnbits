@@ -3,6 +3,7 @@ package lnbits
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 )
@@ -47,7 +48,12 @@ func (l *LNbitsAPI) GetWalletDetails() (wal WalletDetails, err error) {
 }
 
 // CreateInvoice will make an invoice request and returns invoice details
+//
+// The amount must be greater than zero. Otherwise returns an error before requesting.
 func (l *LNbitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) (invoice Invoice, err error) {
+	if amount <= 0 {
+		return invoice, errors.New("the amount is not greater than zero")
+	}
 	b, err := json.Marshal(InvoiceRequest{
 		Out:     out,
 		Amount:  amount,
