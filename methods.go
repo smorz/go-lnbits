@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	base = "https://lnbits.com"
+	base = "https://legend.lnbits.com"
 )
 
 // NewLNbitsAPI creates a new LNbits instance.
