@@ -21,7 +21,7 @@ func TestGetWalletDetails(t *testing.T) {
 }
 
 func TestCreatInvoice(t *testing.T) {
-	//log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	lnbits := NewLNbitsAPI(adminKey, invoiceKey)
 	inv, err := lnbits.CreateInvoice(false, 1, "for api test", "http://smrazavian.ir/l/m/ow_q")
 	if err != nil {

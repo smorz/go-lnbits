@@ -64,7 +64,7 @@ func (l *LNbitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) 
 	if err != nil {
 		return
 	}
-	req, err := http.NewRequest("post", base+"/api/v1/payments", bytes.NewBuffer(b))
+	req, err := http.NewRequest("POST", base+"/api/v1/payments", bytes.NewReader(b))
 	if err != nil {
 		return
 	}
