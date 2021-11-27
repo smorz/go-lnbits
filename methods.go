@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
+	"log"
 	"net/http"
 )
 
@@ -80,6 +81,7 @@ func (l *LNbitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) 
 	}
 	err = json.Unmarshal(body, &invoice)
 	if err != nil {
+		log.Println(string(body))
 		return
 	}
 	return
