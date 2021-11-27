@@ -27,7 +27,7 @@ func NewLNbitsAPI(adminKey, invoiceKey string) *LNbitsAPI {
 
 // GetWalletDetails fetches the currently wallet details.
 func (l *LNbitsAPI) GetWalletDetails() (wal WalletDetails, err error) {
-	req, err := http.NewRequest("get", base+"/api/v1/wallet", nil)
+	req, err := http.NewRequest("GET", base+"/api/v1/wallet", nil)
 	if err != nil {
 		return
 	}
@@ -89,7 +89,7 @@ func (l *LNbitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) 
 
 // CheckInvoice returns true in Paid field of output if the invoice is paid.
 func (l *LNbitsAPI) CheckInvoice(paymentHash string) (paymentResult PaymentResult, err error) {
-	req, err := http.NewRequest("get", base+"/api/v1/payments/"+paymentHash, nil)
+	req, err := http.NewRequest("GET", base+"/api/v1/payments/"+paymentHash, nil)
 	if err != nil {
 		return
 	}
