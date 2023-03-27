@@ -11,8 +11,12 @@ const (
 	invoiceKey = "Invoice Key String"
 )
 
+const (
+	base = "https://legend.lnbits.com"
+)
+
 func TestGetWalletDetails(t *testing.T) {
-	lnbits := NewLNbitsAPI(adminKey, invoiceKey)
+	lnbits := NewLNbitsAPI(base, adminKey, invoiceKey)
 	wal, err := lnbits.GetWalletDetails()
 	if err != nil {
 		log.Fatal(err)
@@ -22,7 +26,7 @@ func TestGetWalletDetails(t *testing.T) {
 
 func TestCreatInvoice(t *testing.T) {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
-	lnbits := NewLNbitsAPI(adminKey, invoiceKey)
+	lnbits := NewLNbitsAPI(base, adminKey, invoiceKey)
 	inv, err := lnbits.CreateInvoice(false, 1, "for api test", "http://smrazavian.ir/l/m/ow_q")
 	if err != nil {
 		log.Fatal(err)
@@ -31,7 +35,7 @@ func TestCreatInvoice(t *testing.T) {
 }
 
 func TestCheckInvoice(t *testing.T) {
-	lnbits := NewLNbitsAPI(adminKey, invoiceKey)
+	lnbits := NewLNbitsAPI(base, adminKey, invoiceKey)
 	r, err := lnbits.CheckInvoice("Payment Hash String")
 	if err != nil {
 		log.Fatal(err)

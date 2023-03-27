@@ -7,6 +7,7 @@ type LNbitsAPI struct {
 	Client     *http.Client
 	AdminKey   string
 	InvoiceKey string
+	base       string
 }
 
 // WalletDetails is a response, from GetWalletDetails.

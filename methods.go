@@ -9,25 +9,22 @@ import (
 	"net/http"
 )
 
-const (
-	base = "https://legend.lnbits.com"
-)
-
 // NewLNbitsAPI creates a new LNbits instance.
 //
 // It requires an admin key and an invoice/read key, provided by lnbits.com.
-func NewLNbitsAPI(adminKey, invoiceKey string) *LNbitsAPI {
+func NewLNbitsAPI(base, adminKey, invoiceKey string) *LNbitsAPI {
 	return &LNbitsAPI{
 		Client:     http.DefaultClient,
 		AdminKey:   adminKey,
 		InvoiceKey: invoiceKey,
+		base:       base,
 	}
 
 }
 
 // GetWalletDetails fetches the currently wallet details.
 func (l *LNbitsAPI) GetWalletDetails() (wal WalletDetails, err error) {
-	req, err := http.NewRequest("GET", base+"/api/v1/wallet", nil)
+	req, err := http.NewRequest("GET", l.base+"/api/v1/wallet", nil)
 	if err != nil {
 		return
 	}
@@ -64,7 +61,7 @@ func (l *LNbitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) 
 	if err != nil {
 		return
 	}
-	req, err := http.NewRequest("POST", base+"/api/v1/payments", bytes.NewReader(b))
+	req, err := http.NewRequest("POST", l.base+"/api/v1/payments", bytes.NewReader(b))
 	if err != nil {
 		return
 	}
@@ -89,7 +86,7 @@ func (l *LNbitsAPI) CreateInvoice(out bool, amount int64, memo, webhook string) 
 
 // CheckInvoice returns true in Paid field of output if the invoice is paid.
 func (l *LNbitsAPI) CheckInvoice(paymentHash string) (paymentResult PaymentResult, err error) {
-	req, err := http.NewRequest("GET", base+"/api/v1/payments/"+paymentHash, nil)
+	req, err := http.NewRequest("GET", l.base+"/api/v1/payments/"+paymentHash, nil)
 	if err != nil {
 		return
 	}
